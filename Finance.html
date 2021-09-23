@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Impossible Finance Dashboard</title>
-    <link
+   <link
       rel="stylesheet"
       media="all"
       href="https://cdn.jsdelivr.net/gh/bitquery/widgets@v1.3.8/dist/assets/css/widgets.css"
@@ -35,54 +35,81 @@
     <div class="container">
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col">
-          <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Impossible Finance
+          <div class="d-flex justify-content-center"  style="color: #E67E22;font-size: x-large; font-weight: bold;" >
+              Impossible Finance Dashboard 
           </div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center" style="font-weight: bold;">
+            IDIA Staking 
+          </div>
+          <div id="idia_stake"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px; margin-bottom:20px">
+	      <div class="col-md-6">
+          <div class="d-flex justify-content-center" style="font-weight: bold;">
+		        Daily Transactions
+	        </div>  
+	        <div id="trans_count_by_time"></div>
+	      </div>	
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-             Test
+            Daily Trading Volume
           </div>
-          <div id="test"></div>
+          <div id="volume_by_time"></div>
         </div>
+      </div>
+      <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
             Daily LP Pool Liquidity Activity
           </div>
-
           <div id="lp_liquidity_activity"></div>
+        </div>
+	      <div class="col-md-6">
+          <div class="d-flex justify-content-center" style="font-weight: bold;">
+	          Daily Syrup Pool Liquidity Activity
+          </div>
+	        <div id="syrup_liquidity_activity"></div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
             DexTrades GAS Fee Contribution (BNB)
           </div>
-
           <div id="gas_fee_contribution_by_exchange"></div>
-        </div>
-        <div class="col-md-6">
-          <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Gas Price By Date ( Median, Average, Maximum) in Log scale, GWei
-          </div>
-
-          <div id="transaction_gas_price_by_time_log"></div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center" style="font-weight: bold;">
+            Gas Price By Date ( Median, Average, Maximum) in Log scale, GWei
+          </div>
+          <div id="transaction_gas_price_by_time_log"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:30px; margin-bottom:30px">
         <div class="col">
           <div class="d-flex justify-content-end">
             <a href="https://explorer.bitquery.io/bsc/smart_contract/0xbcfccbde45ce874adcb698cc183debcf17952812">
               <img
-                src="https://bitquery.io/wp-content/uploads/2020/09/bitquery_logo_w.png"
+                src="https://lh3.googleusercontent.com/gLUJmZaNklu79UkRHR5oHP5eOP6NiRBXoP7mk36LHul-41QqZuh2NVYV_sSN6JLczaPmLO5ZVqZPNFMtPw4JhVR78ctqmJGADPyOlp8pG6r_4J1c4UbQ0aQcA2zneUikWJ3kThGX"
                 style="height: 30px;"
             /></a>
           </div>
         </div>
       </div>
     </div>
+    <nav>
+      <a href="https://alichef000.github.io">Main Page</a> |
+      <a href="https://alichef000.github.io/Top_100/">Top Tradings</a> |
+      <a href="https://alichef000.github.io/competitor/">Competitors</a> |
+      <a href="https://alichef000.github.io/v1_dashboard/">V1 Data</a> |
+      </nav>
   </body>
 
   <script>
@@ -110,51 +137,181 @@
   }
 }
 `);
-      var wdts = new widgets.chartByTime(
-        "#test",
-        query,
-        "ethereum.transfers",
-        {
-          title: "Test",
-          chartOptions: {
-            vAxes: {
-              "0": {
-                title: "test",
-                scaleType:"linear"
-              },
-            },
-            series: {
-              "0": {
-                color: "#ffc107",
-              },
-              "1":{
-                color:"#28a745"
-              }
-            },
-            seriesType: "lines",
-          },
-          dataOptions: [
-          {
-              title: {
-                label: "Date",
+    var wdts = new widgets.chartByTime('#idia_stake', query, 'ethereum.transfers', {
+ "title": "Staking",
+ "chartOptions": {
+  "vAxes": {
+   "0": {
+    "title": "Deposit Amount",
+    "scaleType": "bar"
+   },
+   "1": {
+    "title": "Withdraw Amount",
+    "scaleType": "linear"
+   },
+  },
+  "series": {
+   "0": {
+    "color": "#ffc107",
+    "barWidth":"2",
+    "pointsVisible":true,
+    "pointShape":"round",
+    "pointSize":"3",
+    "targetAxisIndex": 0,
+    "type":"line"
+   },
+   "1": {
+    "color": "#28a745",
+    "lineWidth":"2",
+    "pointsVisible":false,
+    "pointShape":"diamond",
+    "pointSize":"3",
+    targetAxisIndex: 1,
+    "type":"area"
+   },
+  },
+  "seriesType": "line"
+ },
+ "dataOptions": [
+  {
+    title: {label: "Date",
                 type: "date",
               },
               path: "date.date",
             },
-            {
-              title: "Deposit Amt",
-              path: "sum_in"
+  
+  {
+   "title": "IDAI Deposit Amount",
+   "path": "sum_in",
+  },
+  {
+   "title": "IDIA Withdraw Amount",
+   "path": "sum_out"
+  },
+ ]
+});
+    query.request({dateFormat:
+                  "%Y-%m-%d"});
+    })();
+  </script>
+<script>
+ (function(){
+    widgets.init('https://graphql.bitquery.io', '', {locale: 'en', theme: 'light'});
+    var query = new widgets.query(`
+
+  query($dateFormat:String!)
+{ethereum(network:bsc){
+  smartContractCalls(
+    date:{since:"2021-04-20"},
+  )
+  {
+date:date{dt:date(format:$dateFormat)}
+  Pancake: count(uniq:txs,smartContractAddress:{is:"0x10ED43C718714eb63d5aA57B78B54704E256024E"})
+  caller:count(uniq:callers,smartContractAddress:{is:"0x10ED43C718714eb63d5aA57B78B54704E256024E"})
+    }
+  }}
+
+`);
+    var wdts = new widgets.chartByTime('#trans_count_by_time', query, 'ethereum.smartContractCalls', {
+ "title": "Transactions",
+ "chartOptions": {
+  "vAxes": {
+   "0": {
+    "title": "Pancake V2 Transactions",
+    "scaleType": "linear"
+   },
+   "1": {
+    "title": "Callers",
+    "scaleType": "linear"
+   },
+  },
+  "series": {
+   "0": {
+    "color": "#ffc107",
+    "barWidth":"2",
+    "pointsVisible":true,
+    "pointShape":"round",
+    "pointSize":"3",
+    "targetAxisIndex": 0,
+    "type":"line"
+   },
+   "1": {
+    "color": "#28a745",
+    "lineWidth":"2",
+    "pointsVisible":false,
+    "pointShape":"diamond",
+    "pointSize":"3",
+    targetAxisIndex: 1,
+    "type":"area"
+   },
+  },
+  "seriesType": "line"
+ },
+ "dataOptions": [
+  {
+    title: {label: "Date",
+                type: "date",
+              },
+              path: "date.dt",
             },
-            {
-              title: "Withdraw Amt",
-              path: "sum_out"
+  
+  {
+   "title": "Pancake V2 Transactions",
+   "path": "Pancake",
+  },
+  {
+   "title": "Daily Callers",
+   "path": "caller"
+  },
+ ]
+});
+    query.request({dateFormat:
+                  "%Y-%m-%d"});
+    })();
+	</script>
+  <script>
+     (function(){
+    widgets.init('https://graphql.bitquery.io', '', {locale: 'en', theme: 'light'});
+    var query = new widgets.query(`
+
+
+query($dateFormat:String!)
+{ethereum(network:bsc){
+  dexTrades(exchangeName:{is:"Pancake v2"}
+  date:{since:"2021-04-20"}){
+    date:date{date(format:$dateFormat)}
+    tradeAmount(in:USD)
+  }
+}}
+
+`);
+    var wdts = new widgets.chartByTime('#volume_by_time', query, 'ethereum.dexTrades', {
+ "title": "Transactions",
+ "chartOptions": {
+  "vAxes": {
+   "0": {
+    "title": "Trade Volume USD",
+    "scaleType": "linear"
+   },
+  },
+  "seriesType": "area"
+ },
+ "dataOptions": [
+ {
+              title: 
+              {label:"Date",
+                type: "date"},
+              path: "date.date",
             },
-          ],
-        }
-      );
-      query.request({
-        dateFormat:"%Y-%m-%d"
-      });
+  {
+   "title": "Trade Volume",
+   "path": "tradeAmount"
+  }
+ 
+ ]
+});
+    query.request({dateFormat:"%Y-%m-%d"
+  });
     })();
   </script>
   <script>
@@ -170,7 +327,7 @@
     smartContractEvents(
       smartContractAddress: {in: $address}
       smartContractEvent: {in: ["Mint","Burn"]}
-      date:{since:"2020-11-01"}
+      date:{since:"2021-04-20"}
     ) {
       date:date{date(format:$dateFormat)}
    Mint:count(uniq: callers,smartContractEvent:{is:"Mint"})
@@ -192,7 +349,7 @@
           chartOptions: {
             vAxes: {
               "0": {
-                title: "Liquidity Activity",
+                title: "Uniq Address",
               },
             },
             series: {
@@ -226,102 +383,220 @@
       );
       query.request({
         address:[
-"0xA527a61703D82139F8a06Bc30097cC9CAA2df5A6",
-"0x7b1e440240B220244761C9D9A3B07fbA1995BD84",
-"0x7Bb89460599Dbf32ee3Aa50798BBcEae2A5F7f6a",
-"0xe022baa3E5E87658f789c9132B10d7425Fd3a389",
-"0xfEc200A5E3adDD4a7915a556DDe3F5850e644020",
-"0x0F556f4E47513d1a19Be456a9aF778d7e1A226B9",
-"0xCA01F5D89d5b1d24ca5D6Ecc856D21e8a61DAFCc",
-"0xad7e515409e5a7d516411a85acc88c5e993f570a",
-"0x83B92D283cd279fF2e057BD86a95BdEfffED6faa",
-"0xbF36959939982D0D34B37Fb3f3425da9676C13a3",
-"0x45a9e8d48bc560416008d122c9437927fed50e7d",
-"0x69ab367bc1bea1d2c0fb4dbaec6b7197951da56c",
-"0xAB97952a2806D5c92b7046c7aB13a72A87e0097b",
-"0x4db28767d1527ba545ca5bbda1c96a94ed6ff242",
-"0xdc6c130299e53acd2cc2d291fa10552ca2198a6b",
-"0x292ca56ed5b3330a19037f835af4a9c0098ea6fa",
-"0x4D5aA94Ce6BbB1BC4eb73207a5a5d4D052cFcD67",
-"0x36b8b28d37f93372188f2aa2507b68a5cd8b2664",
-"0x86e650350c40a5178a5d014ba37fe8556232b898",
-"0x9d8b7e4a9d53654d82f12c83448d8f92732bc761",
-"0x17580340f3daedae871a8c21d15911742ec79e0f",
-"0x9e642d174b14faea31d842dc83037c42b53236e6",
-"0x4576C456AF93a37a096235e5d83f812AC9aeD027",
-"0x5E3CD27F36932Bc0314aC4e2510585798C34a2fC",
-"0xb5ab3996808c7e489dcdc0f1af2ab212ae0059af",
-"0xc1800c29cf91954357cd0bf3f0accaada3d0109c",
-"0x0392957571f28037607c14832d16f8b653edd472",
-"0xcbe2cf3bd012e9c1ade2ee4d41db3dac763e78f3",
-"0x99d865ed50d2c32c1493896810fa386c1ce81d91",
-"0xeb325a8ea1c5abf40c7ceaf645596c1f943d0948",
-"0x60bB03D1010b99CEAdD0dd209b64bC8bd83da161",
-"0x66b9e1eac8a81f3752f7f3a5e95de460688a17ee",
-"0x74690f829fec83ea424ee1f1654041b2491a7be9",
-"0x3ef4952c7a9afbe374ea02d1bf5ed5a0015b7716",
-"0xD1F12370b2ba1C79838337648F820a87eDF5e1e6",
-"0xc92Dc34665c8a21f98E1E38474580b61b4f3e1b9",
-"0x852A68181f789AE6d1Da3dF101740a59A071004f",
-"0xF609ade3846981825776068a8eD7746470029D1f",
-"0xD5664D2d15cdffD597515f1c0D945c6c1D3Bf85B",
-"0xffb9e2d5ce4378f1a89b29bf53f80804cc078102",
-"0x36b7d2e5c7877392fb17f9219efad56f3d794700",
-"0x6411310c07d8c48730172146fd6f31fa84034a8b",
-"0x91589786D36fEe5B27A5539CfE638a5fc9834665",
-"0xbc765fd113c5bdb2ebc25f711191b56bb8690aec",
-"0x680dd100e4b394bda26a59dd5c119a391e747d18",
-"0x3aB77e40340AB084c3e23Be8e5A6f7afed9D41DC",
-"0x20781bc3701c5309ac75291f5d09bdc23d7b7fa8",
-"0x01ecc44ddd2d104f44d2aa1a2bd9dfbc91ae8275",
-"0xbe14f3a89a4f7f279af9d99554cf12e8c29db921",
-"0x64373608f2e93ea97ad4d8ca2cce6b2575db2f55",
-"0xd6b900d5308356317299dafe303e661271aa12f1",
-"0xd5b3ebf1a85d32c73a82b40f75e1cd929caf4029",
-"0x58B58cab6C5cF158f63A2390b817710826d116D0",
-"0x470bc451810b312bbb1256f96b0895d95ea659b1",
-"0x51a2ffa5b7de506f9a22549e48b33f6cf0d9030e",
-"0x9c4f6a5050cf863e67a402e8b377973b4e3372c1",
-"0xbEA35584b9a88107102ABEf0BDeE2c4FaE5D8c31",
-"0xff17ff314925dff772b71abdff2782bc913b3575",
-"0xC743Dc05F03D25E1aF8eC5F8228f4BD25513c8d0",
-"0x9f40e8a2fcaa267a0c374b6c661e0b372264cc3d",
-"0x1b96b92314c44b159149f7e0303511fb2fc4774f",
-"0xba51d1ab95756ca4eab8737ecd450cd8f05384cf",
-"0xc639187ef82271d8f517de6feae4faf5b517533c",
-"0xbcd62661a6b1ded703585d3af7d7649ef4dcdb5c",
-"0x981d2ba1b298888408d342c39c2ab92e8991691e",
-"0xaebe45e3a03b734c68e5557ae04bfc76917b4686",
-"0xc15fa3E22c912A276550F3E5FE3b0Deb87B55aCd",
-"0x610e7a287c27dfFcaC0F0a94f547Cc1B770cF483",
-"0x41182c32F854dd97bA0e0B1816022e0aCB2fc0bb",
-"0x70D8929d04b60Af4fb9B58713eBcf18765aDE422",
-"0x7561EEe90e24F3b348E1087A005F78B4c8453524",
-"0x4e0f3385d932F7179DeE045369286FFa6B03d887",
-"0x20bcc3b8a0091ddac2d0bc30f68e6cbb97de59cd",
-"0xc7b4b32a3be2cb6572a1c9959401f832ce47a6d2",
-"0x2333c77fc0b2875c11409cdcd3c75d42d402e834",
-"0x574a978c2d0d36d707a05e459466c7a1054f1210",
-"0x56c77d59e82f33c712f919d09fceddf49660a829",
-"0x5acac332f0f49c8badc7afd0134ad19d3db972e6",
-"0x54edd846db17f43b6e43296134ecd96284671e81",
-"0x68Ff2ca47D27db5Ac0b5c46587645835dD51D3C1",
-"0x4269e7F43A63CEA1aD7707Be565a94a9189967E9",
-"0x35fe9787f0ebf2a200bac413d3030cf62d312774",
-"0x7a34bd64d18e44CfdE3ef4B81b87BAf3EB3315B6",
-"0x30479874f9320a62bce3bc0e315c920e1d73e278",
-"0x752E713fB70E3FA1Ac08bCF34485F14A986956c4",
-"0x7793870484647a7278907498ec504879d6971EAb",
-"0x7cd05f8b960ba071fdf69c750c0e5a57c8366500",
-"0x745c4fd226e169d6da959283275a8e0ecdd7f312",
-"0x2730bf486d658838464a4ef077880998d944252d",
-"0x970858016C963b780E06f7DCfdEf8e809919BcE8",
-"0xc2eed0f5a0dc28cfa895084bc0a9b8b8279ae492",
-"0xd937FB9E6e47F3805981453BFB277a49FFfE04D7",
-"0x3Da30727ed0626b78C212e81B37B97A8eF8A25bB"],
-dateFormat:"%Y-%m-%d"
+"0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+"0x0ed7e52944161450477ee417de9cd3a859b14fd0",
+"0x58f876857a02d6762e0101bb5c46a8c1ed44dc16",
+"0x28415ff2c35b65b9e5c7de82126b4015ab9d031f",
+"0x168b273278f3a8d302de5e879aa30690b7e6c28f",
+"0xdd5bad8f8b360d76d12fda230f8baf42fe0022cf",
+"0x824eb9fadfb377394430d2744fa7c42916de3ece",
+"0x7efaef62fddcca950418312c6c91aef321375a00",
+"0x3dcb1787a95d2ea0eb7d00887704eebf0d79bb13",
+"0x7eb5d86fd78f3852a3e0e064f2842d45a3db6ea2",
+"0x74e4716e431f45807dcf19f284c7aa99f18a4fbc",
+"0x61eb789d75a95caa3ff50ed7e47b96c132fec082",
+"0xacf47cbeaab5c8a6ee99263cfe43995f89fb3206",
+"0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae",
+"0x03f18135c44c64ebfdcbad8297fe5bdafdbbdd86",
+"0x014608e87af97a054c9a49f81e1473076d51d9a3",
+"0x1bdcebca3b93af70b58c41272aea2231754b23ca",
+"0xd8e2f8b6db204c405543953ef6359912fe3a88d6",
+"0x133ee93fe93320e1182923e1a640912ede17c90c",
+"0xd63b5cecb1f40d626307b92706df357709d05827",
+"0x66fdb2eccfb58cf098eaa419e5efde841368e489",
+"0x2354ef4df11afacb85a5c7f98b624072eccddbb1",
+"0x71b01ebddd797c8e9e0b003ea2f4fd207fbf46cc",
+"0xb2678c414ebc63c9cc6d1a0fc45f43e249b50fde",
+"0xc6b668548aa4a56792e8002a920d3159728121d5",
+"0x05faf555522fa3f93959f86b41a3808666093210",
+"0x1f37d4226d23d09044b8005c127c0517bd7e94fd",
+"0xc5768c5371568cf1114cddd52caed163a42626ed",
+"0x942b294e59a8c47a0f7f20df105b082710f7c305",
+"0x4fd6d315bef387fad2322fbc64368fc443f0886d",
+"0xa9986fcbdb23c2e8b11ab40102990a08f8e58f06",
+"0x16afc4f2ad82986bbe2a4525601f8199ab9c832d",
+"0xc13aa76aac067c86ae38028019f414d731b3d86a",
+"0x6d0c831254221ba121fb53fb44df289a6558867d",
+"0x69dee989c30b5ffe40867f5fc14f00e4bce7b681",
+"0x3578b1f9bce98d2f4d293b422d8850fdf48b1f21",
+"0xe834bf723f5bdff34a5d1129f3c31ea4787bc76a",
+"0xf3bc6fc080ffcc30d93df48bfa2aa14b869554bb",
+"0xcad7019d6d84a3294b0494aef02e73bd0f2572eb",
+"0x5afef8567414f29f0f927a0f2787b188624c10e2",
+"0x3f1a9f3d9aad8bd339ed4853f345d2ef89fbfe0c",
+"0x6a97867a4b7eb7646ffb1f359ad582e9903aa1c2",
+"0xf1ec67fa1881796bff63db3e1a301ce9cb787fad",
+"0xffd4b200d3c77a0b691b5562d804b3bd54294e6e",
+"0xd02da76c813b9cd4516ed50442923e625f90228f",
+"0xdde420cbb3794ebd8ffc3ac69f9c78e5d1411870",
+"0xe6b421a4408c82381b226ab5b6f8c4b639044359",
+"0x7752e1fa9f3a2e860856458517008558deb989e3",
+"0xf45cd219aef8618a92baa7ad848364a158a24f33",
+"0xb7cada0f120ca46745a024e6b9fe907b2fe10cf3",
+"0xac109c8025f272414fd9e2faa805a583708a017f",
+"0xc309a6d2f1537922e06f15aa2eb21caa1b2eedb6",
+"0xcdb0016d97fd0e7ec2c3b78aa4786cbd8e19c14c",
+"0x8e04b3972b5c25766c681dfd30a8a1cbf6dcc8c1",
+"0xf23bad605e94de0e3b60c9718a43a94a5af43915",
+"0x804678fa97d91b974ec2af3c843270886528a9e6",
+"0x6045931e511ef7e53a4a817f971e0ca28c758809",
+"0xc74f7243766269dec5b85b0ef4af186e909c1b06",
+"0xef5212ada83ec2cc105c409df10b8806d20e3b35",
+"0x2e28b9b74d6d99d4697e913b82b41ef1cac51c6c",
+"0x41f049d990d38305504631c9835f6f856bf1ba67",
+"0xef7767677867552cfa699148b96a03358a9be779",
+"0x8fa59693458289914db0097f5f366d771b7a7c3f",
+"0xd171b26e4484402de70e3ea256be5a2630d7e88d",
+"0xea26b78255df2bbc31c1ebf60010d78670185bd0",
+"0x6e98beb694ff1cdb1ee130edd2b21b0298683d58",
+"0x7759283571da8c0928786a96ae601944e10461ff",
+"0x89ee0491ce55d2f7472a97602a95426216167189",
+"0x3e19c18fe3458a6065d8f0844cb7eae52c9dae07",
+"0x547a355e70cd1f8caf531b950905af751dbef5e6",
+"0x04b56a5b3f45cfeafbfdcfc999c14be5434f2146",
+"0xba01662e978de7d67f8ffc937726215eb8995d17",
+"0xa39af17ce4a8eb807e076805da1e2b8ea7d0755b",
+"0xec6557348085aa57c72514d67070dc863c0a5a8c",
+"0x0648ff5de80adf54aac07ece2490f50a418dde23",
+"0x46c6ba71af7648cd7f67d0ad4d16f75be251ed12",
+"0x9d2296e2fe3cdbf2eb3e3e2ca8811bafa42eedff",
+"0x9392a1f471d9aa14c0b8eb28bd7a3f4a814727be",
+"0x1472976e0b97f5b2fc93f1fff14e2b5c4447b64f",
+"0xc2d00de94795e60fb76bc37d899170996cbda436",
+"0x92247860a03f48d5c6425c7ca35cdcfcb1013aa1",
+"0xfdfde3af740a22648b9dd66d05698e5095940850",
+"0x7b4682d2b3f8670b125af6aea8d7ed2daa43bdc1",
+"0xc19dfd34d3ba5816df9cbdaa02d32a9f8dc6f6fc",
+"0x1cc18962b919ef90085a8b21f8ddc95824fbad9e",
+"0x6a445ceb72c8b1751755386c3990055ff92e14a0",
+"0xb5d108578be3750209d1b3a8f45ffee8c5a75146",
+"0xdcfbb12ded3fea12d2a078bc6324131cd14bf835",
+"0x2bf2deb40639201c9a94c9e33b4852d9aea5fd2d",
+"0xf90baa331cfd40f094476e752bf272892170d399",
+"0x4ddd56e2f34338839bb5953515833950ea680afb",
+"0xcaa662ad41a662b81be2aea5d59ec0697628665f",
+"0x67efef66a55c4562144b9acfcfbc62f9e4269b3e",
+"0x5b0a3b98c2f01741a11e57a9d0595b254e62f9f2",
+"0x5d937c3966002cbd9d32c890a59439b4b300a14d",
+"0x3edb06e2d182d133864fe7c0f9b4c204bbf61d4e"
 
+],
+dateFormat:"%Y-%m-%d"
       });
+    })();
+  </script>
+  <script>
+	  (function(){
+    widgets.init('https://graphql.bitquery.io', '', 
+    {locale: 'en', theme: 'light'});
+    var query = new widgets.query(`
+    query ($dateFormat:String!,
+	$address: [String!])
+    {
+  ethereum(network: bsc) {
+    smartContractEvents(
+      smartContractAddress: {in: $address}
+      smartContractEvent: {in:["Deposit","Withdraw"]}
+      date: {since: "2020-11-01"}
+    ) {
+      date:date{dt:date(format:$dateFormat)}
+     Mint:count(uniq: callers,smartContractEvent:{is:"Deposit"})
+     Burn:count(uniq: callers,smartContractEvent:{is:"Withdraw"})
+    }
+  }
+}
+
+`);
+    var wdts = new widgets.chartByTime('#syrup_liquidity_activity', query, 'ethereum.smartContractEvents', {
+ "title": "Syrup Pools Liquidity Activity",
+ "chartOptions": {
+  "vAxes": {
+   "0": {
+    "title": "Uniq Address",
+    "scaleType": "linear"
+   },
+  },
+  "series": {
+   "1": {
+    "color": "#28a745"
+   },
+   "0": {
+    "color": "#ffc107"
+   },
+   "2": {
+    "color": "#9bc2cf"
+   }
+  },
+  "seriesType": "area"
+ },
+ "dataOptions": [
+ {
+              title: {
+                label: "Date",
+                type: "date",
+              },
+              path: "date.dt",
+            },
+  {
+   "title": "Liquidity Adder",
+   "path": "Mint"
+  },
+  {
+   "title": "Liquidity Remover",
+   "path": "Burn"
+  }
+ 
+ ]
+});
+    query.request({dateFormat: "%Y-%m-%d",
+address:[
+"0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82", //syrup pool
+"0x73feaa1ee314f8c655e354234017be2193c9e24e",
+"0xa80240eb5d7e05d3f250cf000eec0891d00b51cc",
+"0xc612680457751d0d01b5d901ad08132a3b001900",
+"0x36f9452083fc9bc469a31e7966b873f402292433",
+"0x567fd708e788e51b68666b9310ee9df163d60fae",
+"0x44d1f81e80e43e935d66d65874354ef91e5e49f6",
+"0x35bd47263f7e57368df76339903c53baa99076e1",
+"0x6ac2213f09a404c86aff506aa51b6a5bf1f6e24e",
+"0x2666e2494e742301ffc8026e476acc1710a775ed",
+"0x5cc7a19a50be2a6b2540ebcd55bd728e732e59c3",
+"0x64473c33c360f315cab38674f1633505d1d8dcb2",
+"0x88c321d444c88acf3e747dc90f20421b97648903",
+"0xa07a91da6d10173f33c294803684bceede325957",
+"0x9c8813d7d0a61d30610a7a5fdef9109e196a3d77",
+"0x7c71723fb1f9cfb250b702cfc4ebd5d9ab2e83d9",
+"0x6bd94783cacef3fb7eaa9284f1631c464479829f",
+"0x017dea5c58c2bcf57fa73945073df7ad4052a71c",
+"0x391240a007bfd8a59ba74978d691219a76c64c5c",
+"0x0446b8f8474c590d2249a4acdd6eedbc2e004bca",
+"0x53a2d1db049b5271c6b6db020dba0e8a7c4eb90d",
+"0x09b8a5f51c9e245402057851ada274174fa00e2a",
+"0x135827eaf9746573c0b013f18ee12f138b9b0384",
+"0xae611c6d4d3ca2cee44cd34eb7aac29d5a387fcf",
+"0xe595456846155e23b24cc9cbee910ee97027db6d",
+"0x97058cf9b36c9ef1622485cef22e72d6fea32a36",
+"0xd1812e7e28c39e78727592de030fc0e7c366d61a",
+"0xb2b62f88ab82ed0bb4ab4da60d9dc9acf9e816e5",
+"0x28050e8f024e05f9ddbef5f60dd49f536dba0cf0",
+"0x5e49531ba07be577323e55666d46c6217164119e",
+"0xb56299d8fbf46c509014b103a164ad1fc65ea222",
+"0x57d3524888ded4085d9124a422f13b27c8a43de7",
+"0xde4aef42bb27a2cb45c746acde4e4d8ab711d27c",
+"0x455f4d4cc4d6ca15441a93c631e82aaf338ad843",
+"0x3b804460c3c62f0f565af593984159f13b1ac976",
+"0x8aa5b2c67852ed5334c8a7f0b5eb0ef975106793",
+"0xb6e510ae2da1ab4e350f837c70823ab75091780e",
+"0xbedb490970204cb3cc7b0fea94463bed67d5364d",
+"0x401b9b97bdbc3197c1adfab9652dc78040bd1e13",
+"0x52733ad7b4d09bf613b0389045e33e2f287afa04",
+"0xb38b78529bcc895da16ce2978d6cd6c56e8cffc3",
+"0x2e101b5f7f910f2609e5ace5f43bd274b1de09aa",
+"0xb72def58d0832f747d6b7197471fe20aea7eb463",
+"0xc4b15117bc0be030c20754ff36197641477af5d1",
+"0x8ed7acf12b08274d5cdaf03d43d0e54bcbdd487e"
+]
+	});
     })();
   </script>
   <script>
@@ -334,9 +609,10 @@ dateFormat:"%Y-%m-%d"
       query ($dateFormat:String!){
   ethereum(network:bsc) {
     dexTrades(
-    date: {after: "2020-12-01"}) {
+
+    date: {after: "2021-01-01"}) {
       
-			date:date{date(format:$dateFormat)}
+			date:date{dt:date(format:$dateFormat)}
       
       exchange {
         fullName
@@ -352,13 +628,12 @@ var wdts = new widgets.pivotChart('#gas_fee_contribution_by_exchange', query, 'e
  "chartOptions": {
   "vAxes": {
    "0": {
-    "title": "Trades Count",
+    "title": "Gas Fee",
     "viewWindow": {
      "min": 0
     }
    }
   },
- 
   "bar": {
    "groupWidth": "100%"
   },
@@ -378,18 +653,21 @@ var wdts = new widgets.pivotChart('#gas_fee_contribution_by_exchange', query, 'e
  ],
  "rows": [
   {
-   "title": "Date",
-   "path": "date.date"
-  }
+    title: "Date",
+    type: "date",
+    path: "date.dt",
+            },
  ],
  "sort": {
   "metric": "Gas",
-  "direction": "asc",
+  "direction": "desc",
   "axis": "col"
  },
  "limit": {}
 });
-    query.request({"dateFormat": "%Y-%m-%d"});
+    query.request({
+      dateFormat:"%Y-%m-%d"
+    });
     })()
 </script>
   <script>
@@ -472,3 +750,4 @@ var wdts = new widgets.pivotChart('#gas_fee_contribution_by_exchange', query, 'e
     })();
   </script>
 </html>
+
