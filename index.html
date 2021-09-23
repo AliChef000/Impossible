@@ -80,7 +80,7 @@
       currency:{in:[
       "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89"
     ]}) {
-      date{date(format:"%Y-%m-%d")}
+date: date{date(format: $dateFormat)}
       currency{symbol}
       sum_in: amount(calculate: sum, receiver: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
       sum_out: amount(calculate: sum, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
@@ -160,7 +160,7 @@
       currency:{in:[
       "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89"
     ]}) {
-      date{date(format:"%Y-%m-%d")}
+date: date{date(format: $dateFormat)}
       currency{symbol}
       sum_in: amount(calculate: sum, receiver: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
       sum_out: amount(calculate: sum, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
@@ -243,10 +243,7 @@
 quoteCurrency{symbol}
     
     quotePrice
-   {
-                        date: date{
-                          date(format: $dateFormat)
-                        }
+date: date{date(format: $dateFormat)}
   }
 
 }}
@@ -278,7 +275,7 @@ quoteCurrency{symbol}
     title: {label: "Date",
                 type: "date",
               },
-              path: "date.dt",
+              path: "date.date",
             },
   
   {
