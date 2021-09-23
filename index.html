@@ -74,7 +74,7 @@
         theme: "light",
       });
       var query = new widgets.query(`
-     query  {
+     query( $dateFormat: String!)  {
   ethereum(network: bsc) {
     transfers(
   
@@ -154,7 +154,7 @@ date: date{date(format: $dateFormat)}
     widgets.init('https://graphql.bitquery.io', '', {locale: 'en', theme: 'light'});
     var query = new widgets.query(`
 
-   query  {
+   query( $dateFormat: String!)  {
   ethereum(network: bsc) {
     transfers(
   
@@ -236,7 +236,8 @@ date: date{date(format: $dateFormat)}
         theme: "light",
       });
       var query = new widgets.query(`
-    {ethereum(network:bsc){
+   query( $dateFormat: String!) 
+   {ethereum(network:bsc){
   dexTrades(
     baseCurrency:{is:"0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"}
   date:{since:"2021-08-21"}
