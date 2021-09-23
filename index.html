@@ -114,7 +114,7 @@
         theme: "light",
       });
       var query = new widgets.query(`
-     query ($IF: String!) {
+     query  {
   ethereum(network: bsc) {
     transfers(
   
@@ -123,10 +123,10 @@
     ]}) {
       date{date}
       currency{symbol}
-      sum_in: amount(calculate: sum, receiver: {is: $IF})
-      sum_out: amount(calculate: sum, sender: {is: $IF})
-      count_in: count(uniq: senders, receiver: {is:$IF})
-      count_out: count(uniq: receivers, sender: {is: $IF})
+      sum_in: amount(calculate: sum, receiver: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      sum_out: amount(calculate: sum, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      count_in: count(uniq: senders, receiver: {is:"0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      count_out: count(uniq: receivers, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
     
     }
   }
