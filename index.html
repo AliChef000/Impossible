@@ -98,7 +98,7 @@
             <a href="https://explorer.bitquery.io/bsc/smart_contract/0xbcfccbde45ce874adcb698cc183debcf17952812">
               <img
                 src="https://swap.impossible.finance/images/IF.jpeg"
-                style="height: 30px;"
+                style="height: 50px;"
             /></a>
           </div>
         </div>
@@ -138,11 +138,11 @@
   "vAxes": {
    "0": {
     "title": "Deposit Amount",
-    "scaleType": "bars"
+    "scaleType": "bar"
    },
    "1": {
     "title": "Withdraw Amount",
-    "scaleType": "bars"
+    "scaleType": "bar"
    },
   },
   "series": {
@@ -212,7 +212,7 @@
   }
 }
 `);
-    var wdts = new widgets.chartByTime('#idia_stake_amt', query, 'ethereum.transfers', {
+    var wdts = new widgets.chartByTime('#idia_stake_addr', query, 'ethereum.transfers', {
  "title": "Staking",
  "chartOptions": {
   "vAxes": {
