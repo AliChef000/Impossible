@@ -18,7 +18,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-	  <script src="https://cdn.jsdelivr.net/gh/bitquery/widgets@v1.3.8/dist/widgets.js"></script>
     <style></style>
   </head>
   <body>
@@ -244,7 +243,10 @@
 quoteCurrency{symbol}
     
     quotePrice
-   date{dt:date(format:"%Y-%m-%d")}
+   {
+                        date: date{
+                          date(format: $dateFormat)
+                        }
   }
 
 }}
@@ -266,10 +268,10 @@ quoteCurrency{symbol}
     "pointShape":"round",
     "pointSize":"3",
     "targetAxisIndex": 0,
-    "type":"line"
+    "type":"lines"
    },
   },
-  "seriesType": "line"
+  "seriesType": "lines"
  },
  "dataOptions": [
   {
