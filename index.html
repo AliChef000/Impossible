@@ -41,19 +41,19 @@
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
             IDIA Staking 
           </div>
-          <div id="idia_stake"></div>
+          <div id="idia_stake_amt"></div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
 	      <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-		        Daily Transactions
+		        IDIA Staking Address
 	        </div>  
-	        <div id="trans_count_by_time"></div>
+	        <div id="idia_stake_addr"></div>
 	      </div>	
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
@@ -97,7 +97,7 @@
           <div class="d-flex justify-content-end">
             <a href="https://explorer.bitquery.io/bsc/smart_contract/0xbcfccbde45ce874adcb698cc183debcf17952812">
               <img
-                src="https://www.google.com/search?q=https://impossible.finance+logo&rlz=1C5CHFA_en__908TW909&sxsrf=AOaemvKNlYOa6Ld4VZiyPVXgvGxAZxKJvw:1632404764108&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjE8t_QnZXzAhUTx2EKHdyTC5cQ_AUoAXoECAEQAw&biw=1440&bih=789&dpr=2#imgrc=9VkHVeoxCZUQqM"
+                src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/yufjyoaxmytryayohrvt"
                 style="height: 30px;"
             /></a>
           </div>
@@ -132,7 +132,7 @@
   }
 }
 `);
-    var wdts = new widgets.chartByTime('#idia_stake', query, 'ethereum.transfers', {
+    var wdts = new widgets.chartByTime('#idia_stake_amt', query, 'ethereum.transfers', {
  "title": "Staking",
  "chartOptions": {
   "vAxes": {
@@ -194,29 +194,34 @@
     widgets.init('https://graphql.bitquery.io', '', {locale: 'en', theme: 'light'});
     var query = new widgets.query(`
 
-  query($dateFormat:String!)
-{ethereum(network:bsc){
-  smartContractCalls(
-    date:{since:"2021-04-20"},
-  )
-  {
-date:date{dt:date(format:$dateFormat)}
-  Pancake: count(uniq:txs,smartContractAddress:{is:"0x10ED43C718714eb63d5aA57B78B54704E256024E"})
-  caller:count(uniq:callers,smartContractAddress:{is:"0x10ED43C718714eb63d5aA57B78B54704E256024E"})
+   query  {
+  ethereum(network: bsc) {
+    transfers(
+  
+      currency:{in:[
+      "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89"
+    ]}) {
+      date{date}
+      currency{symbol}
+      sum_in: amount(calculate: sum, receiver: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      sum_out: amount(calculate: sum, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      count_in: count(uniq: senders, receiver: {is:"0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+      count_out: count(uniq: receivers, sender: {is: "0x1aBd0067f60513F152ff14E9cD26a62c820d022C"})
+    
     }
-  }}
-
+  }
+}
 `);
-    var wdts = new widgets.chartByTime('#trans_count_by_time', query, 'ethereum.smartContractCalls', {
- "title": "Transactions",
+    var wdts = new widgets.chartByTime('#idia_stake_amt', query, 'ethereum.transfers', {
+ "title": "Staking",
  "chartOptions": {
   "vAxes": {
    "0": {
-    "title": "Pancake V2 Transactions",
-    "scaleType": "linear"
+    "title": "Deposit Address",
+    "scaleType": "bar"
    },
    "1": {
-    "title": "Callers",
+    "title": "Withdraw Address",
     "scaleType": "linear"
    },
   },
@@ -247,16 +252,16 @@ date:date{dt:date(format:$dateFormat)}
     title: {label: "Date",
                 type: "date",
               },
-              path: "date.dt",
+              path: "date.date",
             },
   
   {
-   "title": "Pancake V2 Transactions",
-   "path": "Pancake",
+   "title": "IDAI Deposit Address",
+   "path": "count_in",
   },
   {
-   "title": "Daily Callers",
-   "path": "caller"
+   "title": "IDIA Withdraw Address",
+   "path": "count_out"
   },
  ]
 });
