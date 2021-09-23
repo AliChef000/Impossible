@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pancake Analytics Dashboard</title>
+    <title>Impossible Finance Dashboard</title>
     <link
       rel="stylesheet"
       media="all"
@@ -36,16 +36,16 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Pancake Analytics Dashboard
+            Impossible Finance
           </div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Daily Active Address 
+             Test
           </div>
-          <div id="active_address_by_time"></div>
+          <div id="test"></div>
         </div>
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
@@ -92,26 +92,34 @@
         theme: "light",
       });
       var query = new widgets.query(`
-      query ($dateFormat: String!)  
-      {ethereum(network:bsc){
-  dexTrades(date:{since:"2020-09-24"}){
-  Pancake:count(uniq:senders,exchangeName:{is:"Pancake"})
-  Others:count(uniq:senders,exchangeName:{not:"Pancake"})
-    date:date{dt:date(format:$dateFormat)}
-   gasValue
+     query ($IF: String!) {
+  ethereum(network: bsc) {
+    transfers(
   
+      currency:{in:[
+      "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89"
+    ]}) {
+      date{date}
+      currency{symbol}
+      sum_in: amount(calculate: sum, receiver: {is: $IF})
+      sum_out: amount(calculate: sum, sender: {is: $IF})
+      count_in: count(uniq: senders, receiver: {is:$IF})
+      count_out: count(uniq: receivers, sender: {is: $IF})
+    
+    }
   }
-}}`);
+}
+`);
       var wdts = new widgets.chartByTime(
-        "#active_address_by_time",
+        "#test",
         query,
-        "ethereum.dexTrades",
+        "ethereum.transfers",
         {
-          title: "Dynamic Active Address",
+          title: "Test",
           chartOptions: {
             vAxes: {
               "0": {
-                title: "Daily Active Address",
+                title: "test",
                 scaleType:"linear"
               },
             },
@@ -131,15 +139,15 @@
                 label: "Date",
                 type: "date",
               },
-              path: "date.dt",
+              path: "date.date",
             },
             {
-              title: "Pancake",
-              path: "Pancake"
+              title: "Deposit Amt",
+              path: "sum_in"
             },
             {
-              title: "Others",
-              path: "Others"
+              title: "Withdraw Amt",
+              path: "sum_out"
             },
           ],
         }
