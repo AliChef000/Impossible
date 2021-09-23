@@ -35,7 +35,7 @@
     <div class="container">
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col">
-          <div class="d-flex justify-content-center"  style="color: #0040ff;font-size: x-large; font-weight: bold;" >
+          <div class="d-flex justify-content-center"  style="color: #3288f8;font-size: x-large; font-weight: bold;" >
               Impossible Finance Dashboard 
           </div>
         </div>
@@ -43,7 +43,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-6">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            IDIA Staking 
+            IDIA Staking Amount
           </div>
           <div id="idia_stake_amt"></div>
       </div>
@@ -138,11 +138,11 @@
   "vAxes": {
    "0": {
     "title": "Deposit Amount",
-    "scaleType": "area"
+    "scaleType": "bars"
    },
    "1": {
     "title": "Withdraw Amount",
-    "scaleType": "area"
+    "scaleType": "bars"
    },
   },
   "series": {
@@ -153,7 +153,7 @@
     "pointShape":"round",
     "pointSize":"3",
     "targetAxisIndex": 0,
-    "type":"area"
+    "type":"bars"
    },
    "1": {
     "color": "#28a745",
@@ -162,10 +162,10 @@
     "pointShape":"diamond",
     "pointSize":"3",
     targetAxisIndex: 1,
-    "type":"area"
+    "type":"bars"
    },
   },
-  "seriesType": "area"
+  "seriesType": "bars"
  },
  "dataOptions": [
   {
@@ -218,11 +218,11 @@
   "vAxes": {
    "0": {
     "title": "Deposit Address",
-    "scaleType": "bars"
+    "scaleType": "linear"
    },
    "1": {
     "title": "Withdraw Address",
-    "scaleType": "bars"
+    "scaleType": "linear"
    },
   },
   "series": {
@@ -233,19 +233,19 @@
     "pointShape":"round",
     "pointSize":"3",
     "targetAxisIndex": 0,
-    "type":"bars"
+    "type":"line"
    },
    "1": {
     "color": "#28a745",
     "lineWidth":"2",
     "pointsVisible":false,
-    "pointShape":"diamond",
+    "pointShape":"round",
     "pointSize":"3",
     targetAxisIndex: 1,
-    "type":"bars"
+    "type":"line"
    },
   },
-  "seriesType": "bars"
+  "seriesType": "line"
  },
  "dataOptions": [
   {
