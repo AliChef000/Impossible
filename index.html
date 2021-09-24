@@ -236,18 +236,16 @@ date: date{date(format: $dateFormat)}
         theme: "light",
       });
       var query = new widgets.query(`
-   query( $dateFormat: String!) 
-   {ethereum(network:bsc){
-  dexTrades(
-    baseCurrency:{is:"0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"}
-  date:{since:"2021-08-21"}
+  {ethereum(network:bsc){
+  dexTrades(baseCurrency:{is:"0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"},
+  quoteCurrency:{is:"0xe9e7cea3dedca5984780bafc599bd69add087d56"}
+    exchangeAddress:{is:"0xca143ce32fe78f1f7019d7d551a6402fc5350c73"},
   ){
-quoteCurrency{symbol}
-    
     quotePrice
-date: date{date(format: $dateFormat)}
+    quoteCurrency{symbol
+    }
+    date{date}
   }
-
 }}
 `);
     var wdts = new widgets.chartByTime('#price', query, 'ethereum.dexTrades', {
