@@ -47,6 +47,14 @@
 	   <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
        <div class="d-flex justify-content-center" style="font-weight: bold;">
+            Impossible Trading
+          </div>
+          <div id="trade"></div>
+        </div>
+      </div>
+	    <div class="row" style="margin-top:20px; margin-bottom:20px">
+        <div class="col-md-12">
+       <div class="d-flex justify-content-center" style="font-weight: bold;">
             IDIA Price
           </div>
           <div id="price"></div>
@@ -236,6 +244,83 @@ date: date{date(format: $dateFormat)}
         theme: "light",
       });
       var query = new widgets.query(`
+    query($dateFormat: String!)
+{ethereum(network:bsc){
+  dexTrades(
+exchangeAddress:{is:"0x918d7e714243f7d9d463c37e106235dcde294ffc"}
+  date:{since:"2021-04-10"}
+  ){
+date{ date(format: $dateFormat)}
+    
+tradeAmount(in:USD)
+count(uniq:senders)
+  }
+}}
+`);
+    var wdts = new widgets.chartByTime('#trade', query, 'ethereum.dexTrades', {
+ "title": "Staking",
+ "chartOptions": {
+  "vAxes": {
+   "0": {
+    "title": "Trade Amount (USD)",
+    "scaleType": "lines"
+   },
+   "1": {
+    "title": "Active Address",
+    "scaleType": "bars"
+   },
+  },
+  "series": {
+   "0": {
+    "color": "#00FFB9",
+    "barWidth":"2",
+    "pointsVisible":false,
+    "pointShape":"round",
+    "pointSize":"3",
+    "targetAxisIndex": 0,
+    "type":"lines"
+   },
+   "1": {
+    "color": "#0074FF",
+    "lineWidth":"2",
+    "pointsVisible":false,
+    "pointShape":"diamond",
+    "pointSize":"3",
+    targetAxisIndex: 1,
+    "type":"bars"
+   },
+  },
+  "seriesType": "linear"
+ },
+ "dataOptions": [
+  {
+    title: {label: "Date",
+                type: "date",
+              },
+              path: "date.date",
+            },
+  
+  {
+   "title": "IDIA Trade Amount",
+   "path": "tradeAmount",
+  },
+  {
+   "title": "Active Trading Address",
+   "path": "count"
+  },
+ ]
+});
+    query.request({dateFormat:
+                  "%Y-%m-%d"});
+    })();
+  </script>
+<script>
+    (function() {
+      widgets.init("https://graphql.bitquery.io", "", {
+        locale: "en",
+        theme: "light",
+      });
+      var query = new widgets.query(`
   {ethereum(network:bsc){
   dexTrades(baseCurrency:{is:"0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"},
   quoteCurrency:{is:"0xe9e7cea3dedca5984780bafc599bd69add087d56"}
@@ -288,4 +373,5 @@ date: date{date(format: $dateFormat)}
                   "%Y-%m-%d"});
     })();
 	</script>
+
 	</html>
